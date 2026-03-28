@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 
 const matchSchema = new mongoose.Schema({
   sport: { type: String, required: true },
@@ -38,7 +38,4 @@ const commentarySchema = new mongoose.Schema({
 const Match = mongoose.model('Match', matchSchema);
 const Commentary = mongoose.model('Commentary', commentarySchema);
 
-module.exports = {
-  Match,
-  Commentary
-};
+export {Match,Commentary};
