@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <form>
+        <input type="text" id="message">
+        <button type="submit">Send</button>
+
+        <div id="log"></div>
+    </form>
+
+    <script>
+        const socket = new WebSocket("ws://localhost:8080");
+        socket.onopen = () => {
+            log("Connected to server");
+        };
+        socket.onmessage = (event) => {
+            log(`Message from server: ${event.data}`);
+        };
+        socket.onclose = () => {
+            log("Disconnected from server");
+        };
+        socket.onerror = (error) => {
+            log("Error: ", error);
+        };
+        function log(message){
+            const div = document.getElementById("log");
+            div.innerHTML += message + "<br>";
+        }
+        document.querySelector("form").addEventListener("submit", (event) => {
+            event.preventDefault();
+            const message = document.getElementById("message").value;
+            socket.send(message);
+        });
+    </script>
+    
+</body>
+</html>
